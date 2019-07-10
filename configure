@@ -283,19 +283,6 @@ function fetch_adjuncts
 	[[ $? -eq 0 ]] || fatal "failed to fetch adjuncts tarball"
 }
 
-function setup_overlays
-{
-	local of="overlay/order"
-	[[ -z "$OVERLAYS" ]] && fatal \
-	    "OVERLAYS variable missing from configure.*"
-	rm -f $of
-	touch $of || fail "failed to create $of"
-	for o in $OVERLAYS; do
-		echo -n "$conf_root/overlay/$o " >> $of || fatal \
-		    "failed to append to $of"
-	done
-}
-
 function fetch_closed
 {
 	local ildir="projects/illumos"
@@ -457,6 +444,63 @@ EOF
 	[[ $? -eq 0 ]] || fatal "failed to write illumos nightly env file"
 }
 
+function update_git
+{
+	local path=$1
+	local branch=$2
+	local cur
+
+	[[ -d "$path" ]] || fatal "can't find directory $path"
+	[[ -z "$branch" ]] && fatal "unspecified branch"
+
+	cd $path >/dev/null 2>&1 || fatal "can't cd into $path"
+	cur=$(git branch | grep "^*" | awk 'BEGIN{ FS=" " } { print $2 }')
+	[[ $? -ne 0 || -z "$cur" ]] && fatal "failed to get current branch"
+	[[ "$cur " == "$branch" ]] && return
+	git checkout $branch >/dev/null || fatal "failed to checkout $branch"
+	cd - >/dev/null 2>&1 || fatal "can't return to previous directory"
+}
+
+function update_branches
+{
+	local line repo branch
+
+	[[ ! -f "configure-branches" ]] && return
+
+	while read line; do
+		line=$(echo $line | sed -e 's/#.*$//')
+		[[ $? -eq 0 ]] || fatal \
+		    "failed to remove comments in configure-branches"
+
+		[[ -z "$line" ]] && continue
+
+		repo=${line%%:*}
+		branch=${line##*:}
+
+		[[ -z "$repo" ]] && fatal \
+		    "missing repository entry in line: [$line]"
+		[[ -z "$branch" ]] && fatal \
+		    "missing branch entry in line: [$branch]"
+
+		# Lots of "configure.smartos" out there with "illumos-live"
+		if [[ "$repo" == "smartos-live" ||
+		    "$repo" == "illumos-live" ]]; then
+			warn "configure-branches can't update smartos-live"
+			warn "ignoring and continuing on..."
+			continue
+		fi
+		if [[ "$repo" == "illumos-joyent" ]]; then
+			update_git "projects/illumos" $branch && continue
+		elif  [[ "$repo" == "illumos-extra" ]]; then
+			update_git "projects/illumos-extra" $branch && continue
+		else
+			[[ -d "projects/local/$repo" ]] && update_git \
+			    "projects/local/$repo" $branch && continue
+		fi
+		fatal "failed to update $repo to $branch"
+	done < "configure-branches"
+}
+
 #
 # This construction lets us place a block of text verbatim into $usage.
 #
@@ -555,9 +599,6 @@ fetch_studio
 echo "done."
 echo "Fetching adjuncts tgz... \c "
 fetch_adjuncts
-echo "done."
-echo "Configuring overlays... \c "
-setup_overlays
 echo "done."
 echo "Fetching and extracting closed bins ... \c "
 fetch_closed

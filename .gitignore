@@ -90,8 +90,5 @@ manifest.gen
 boot.manifest.d/
 manifest.d/
 mancheck.conf.d/
-overlay/order
-overlay/sdc
-overlay/smartos
 pkgsrc/*.tgz
 .*.swp
