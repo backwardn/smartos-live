@@ -471,6 +471,7 @@ function bi_gen_buildstamp_module
 	local tmp_module_o="$bi_tmpdir/buildstamp.o"
 	local tmp_module="$bi_tmpdir/buildstamp"
 	local tmp_module_img="$bi_mnt_root/kernel/drv/amd64/buildstamp"
+	local tmp_module_conf="$bi_mnt_root/kernel/drv/buildstamp.conf"
 
 	bi_emit_start 'Building "buildstamp" module'
 
@@ -522,6 +523,8 @@ function bi_gen_buildstamp_module
 		fail "could not copy buildstamp module into image"
 	fi
 
+	echo 'name="buildstamp" parent="pseudo" instance=0;' >$tmp_module_conf
+
 	bi_emit_done
 }
 
@@ -554,25 +557,6 @@ function bi_ship_manifest
 	bi_emit_done
 }
 
-function bi_fill_templates
-{
-	bi_emit_start 'Filling in template files'
-
-	#
-	# The buildstamp needs to be included in various files in place of
-	# the template value of an all-zero date.
-	#
-	for f in etc/motd etc/issue; do
-		if ! pfexec gsed -i -e \
-		    "s/ [0-9]\{8\}T[0-9]\{6\}Z/ $bi_buildstamp/" \
-		    "$bi_mnt_root/$f"; then
-			fail "could not set buildstamp in \"$f\""
-		fi
-	done
-
-	bi_emit_done
-}
-
 function bi_file_fixups
 {
 	local kernel_src="$bi_mnt_root/platform/i86pc/kernel/amd64/unix"
@@ -584,6 +568,7 @@ function bi_file_fixups
 		fail "could not copy the kernel"
 	fi
 
+	# FIXME??
 	#
 	# Need to ensure that several files in the image are empty
 	#
@@ -962,7 +947,6 @@ bi_create_password
 bi_gen_etcrelease
 bi_gen_buildstamp_module
 bi_ship_manifest
-bi_fill_templates
 bi_file_fixups
 bi_compress_usr
 bi_finish_archive
