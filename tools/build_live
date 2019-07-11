@@ -509,7 +509,7 @@ function bi_gen_buildstamp_module
 		fail "could not link buildstamp module"
 	fi
 
-	if ! $ALTCTFCONVERT "$tmp_module"; then
+	if ! $CTFCONVERT "$tmp_module"; then
 		fail "could not add CTF to buildstamp module"
 	fi
 

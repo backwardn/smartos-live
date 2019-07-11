@@ -588,7 +588,6 @@ $ cd projects/illumos-extra/binutils
 $ STRAP= \
   CTFMERGE=/home/rm/src/mdb_v8/projects/illumos/usr/src/tools/proto/*/opt/onbld/bin/i386/ctfmerge \
   CTFCONVERT=/home/rm/src/mdb_v8/projects/illumos/usr/src/tools/proto/*/opt/onbld/bin/i386/ctfconvert \
-  ALTCTFCONVERT=/home/rm/src/mdb_v8/projects/illumos/usr/src/tools/proto/*/opt/onbld/bin/i386/ctfconvert-altexec \
   gmake DESTDIR=/home/rm/src/mdb_v8/proto install
 ```
 

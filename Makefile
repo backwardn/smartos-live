@@ -137,7 +137,7 @@ world: 0-strap-stamp 0-illumos-stamp 0-extra-stamp 0-livesrc-stamp \
 live: world manifest mancheck_conf boot sdcman $(TOOLS_TARGETS) $(MANCF_FILE)
 	@echo $(SUBDIR_MANIFESTS)
 	mkdir -p ${ROOT}/log
-	ALTCTFCONVERT=$(ALTCTFCONVERT) ./tools/build_live \
+	CTFCONVERT=$(CTFCONVERT) ./tools/build_live \
 	    -m $(ROOT)/$(MANIFEST) -o $(ROOT)/output $(PLATFORM_PASSWORD_OPT) \
 	    $(ROOT)/proto $(ROOT)/man/man
 
