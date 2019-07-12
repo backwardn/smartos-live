@@ -471,7 +471,6 @@ function bi_gen_buildstamp_module
 	local tmp_module_o="$bi_tmpdir/buildstamp.o"
 	local tmp_module="$bi_tmpdir/buildstamp"
 	local tmp_module_img="$bi_mnt_root/kernel/drv/amd64/buildstamp"
-	local tmp_module_conf="$bi_mnt_root/kernel/drv/buildstamp.conf"
 
 	bi_emit_start 'Building "buildstamp" module'
 
@@ -522,8 +521,6 @@ function bi_gen_buildstamp_module
 	    ! pfexec /usr/bin/chmod 0755 "$tmp_module_img"; then
 		fail "could not copy buildstamp module into image"
 	fi
-
-	echo 'name="buildstamp" parent="pseudo" instance=0;' >$tmp_module_conf
 
 	bi_emit_done
 }
