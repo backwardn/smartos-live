@@ -381,7 +381,7 @@ install: all $(SUBDIRS)
 	mkdir -p $(DESTDIR)/usr/bin
 	cp -p $(TARGETS) $(DESTDIR)/usr/bin
 	mkdir -p $(DESTDIR)/usr/sbin
-	cp -p sysevent $(DESTDIR)/usr/sbin
+	cp -p fssstat sysevent zonememstat zonemon $(DESTDIR)/usr/sbin
 	cp -p $(USR_LIB_TARGETS) $(DESTDIR)/usr/lib
 	mkdir -p $(DESTDIR)/smartdc/bin
 	cp -p $(SMARTDC_TARGETS) $(DESTDIR)/smartdc/bin
@@ -390,7 +390,9 @@ install: all $(SUBDIRS)
 	mkdir -p $(DESTDIR)/smartdc/lib
 	cp -p $(SMARTDC_LIB_TARGETS) $(DESTDIR)/smartdc/lib
 	mkdir -p $(DESTDIR)/etc/ssh $(DESTDIR)/etc/notices
-	cp -r $(ETC_TARGETS) $(DESTDIR)/etc
+	for file in $(ETC_TARGETS); do \
+		cp -r $$file $(DESTDIR)/$$file; \
+	done
 	mkdir -m 0755 -p $(PREFIX_NODE)/node_modules
 	cp -Pr node_modules/* $(PREFIX_NODE)/node_modules
 	cp $(KSTAT.NODE) $(PREFIX_NODE)/node_modules/

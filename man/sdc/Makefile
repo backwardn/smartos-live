@@ -9,31 +9,25 @@ DESTDIR =		../../proto
 
 CLEANFILES =		sdc-factoryreset.1
 
-SDCMAN1_PAGES =					\
-			sdc-factoryreset	\
-			sdc-lastcomm		\
-			sdc-zfs-io-throttle
-
-SDCMAN1_FILES =		$(SDCMAN1_PAGES:%=%.1)
+SDCMAN1_FILES =					\
+			sdc-factoryreset.1	\
+			sdc-lastcomm.1		\
+			sdc-zfs-io-throttle.1
 
 PROTO_SDCMAN1_DIR =	$(DESTDIR)/smartdc/man/man1
 PROTO_SDCMAN1_FILES =	$(SDCMAN1_FILES:%=$(PROTO_SDCMAN1_DIR)/%)
 
-MAN1_PAGES =					\
-			json
+MAN1_FILES =					\
+			json.1
 
-MAN1_FILES =		$(MAN1_PAGES:%=%.1)
-
-PROTO_MAN1_DIR =	$(DESTDIR)/share/man/man1
+PROTO_MAN1_DIR =	$(DESTDIR)/usr/share/man/man1
 PROTO_MAN1_FILES =	$(MAN1_FILES:%=$(PROTO_MAN1_DIR)/%)
 
-MAN1M_PAGES =					\
-			fssstat
-
-MAN1M_FILES =		$(MAN1M_PAGES:%=%.1)
+MAN1M_FILES =					\
+			fssstat.1m
 
 PROTO_MAN1M_DIR =	$(DESTDIR)/usr/share/man/man1m
-PROTO_MAN1_FILES =	$(MAN1_FILES:%=$(PROTO_MAN1_DIR)/%)
+PROTO_MAN1M_FILES =	$(MAN1M_FILES:%=$(PROTO_MAN1M_DIR)/%)
 
 all: $(SDCMAN1_FILES) $(MAN1_FILES) $(MAN1M_FILES)
 
