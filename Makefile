@@ -132,9 +132,9 @@ TOOLS_TARGETS = \
 
 world: 0-strap-stamp 0-illumos-stamp 0-extra-stamp 0-livesrc-stamp \
 	0-local-stamp 0-tools-stamp 0-man-stamp 0-devpro-stamp \
-	$(TOOLS_TARGETS) sdcman
+	$(TOOLS_TARGETS)
 
-live: world manifest mancheck_conf boot sdcman $(TOOLS_TARGETS) $(MANCF_FILE)
+live: world manifest mancheck_conf boot $(TOOLS_TARGETS) $(MANCF_FILE)
 	@echo $(SUBDIR_MANIFESTS)
 	mkdir -p ${ROOT}/log
 	CTFCONVERT=$(CTFCONVERT) ./tools/build_live \
@@ -332,6 +332,7 @@ strap-cache:
 	touch $@
 
 0-man-stamp:
+	(cd $(ROOT)/man/sdc && gmake install DESTDIR=$(PROTO) $(SUBDIR_DEFS))
 	(cd $(ROOT)/man/src && gmake clean && gmake)
 	touch $@
 
@@ -367,10 +368,6 @@ $(TZCHECK): 0-illumos-stamp
 .PHONY: $(UCODECHECK)
 $(UCODECHECK): 0-illumos-stamp
 	(cd tools/ucodecheck && gmake ucodecheck CC=$(NATIVE_CC) $(SUBDIR_DEFS))
-
-.PHONY: sdcman
-sdcman:
-	(cd $(ROOT)/man/sdc && gmake install DESTDIR=$(PROTO) $(SUBDIR_DEFS))
 
 jsl: $(JSLINT)
 
