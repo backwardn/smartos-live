@@ -423,6 +423,8 @@ f usr/img/test/runtests 0555 root bin
 f usr/img/test/tap4nodeunit.js 0444 root bin
 f usr/img/test/try-custom-image 0555 root bin
 f usr/img/test/update.test.js 0444 root bin
+d var/db 0755 root sys
+d var/db/imgadm 0755 root bin
 
 # new vmadmd
 s etc/bash/bash_completion.d/vmadm=/usr/vm/etc/vmadm.completion
@@ -1043,6 +1045,7 @@ f usr/fw/test/node_modules/uglify-js/lib/process.js 0444 root root
 f usr/fw/test/node_modules/uglify-js/lib/squeeze-more.js 0444 root root
 f usr/fw/test/node_modules/yamlish/LICENSE 0444 root root
 f usr/fw/test/node_modules/yamlish/index.js 0444 root root
+d var/fw 0755 root bin
 # metadata daemon
 d usr/vm/lib 0555 root bin
 d usr/vm/lib/metadata 0555 root bin
@@ -1067,6 +1070,7 @@ s usr/lib/amd64/libdemangle.so=libdemangle.so.1
 f usr/lib/amd64/libiostream.so.1 0755 root bin
 # 0-livesrc-stamp
 f .smartdc_version 0444 root root
+d etc/ssh 0755 root sys
 f etc/ssh/sshd_config 0644 root sys
 f etc/rtc_config 0644 root root
 f etc/nodename 0644 root root
@@ -1138,6 +1142,11 @@ f usr/node/0.10/node_modules/zonename.js 0444 root bin
 f usr/node/0.10/node_modules/zonename_binding.node 0444 root bin
 # automatically generated man.cf file
 f usr/share/man/man.cf 0444 root bin
+f var/log/syslog 0644 root root
+d var/log 0755 root sys
+d var/log/sdc 0755 root sys
+d var/log/sdc/upload 0755 root sys
+d var/log/vm 0755 root sys
 
 # 0-man-stamp
 d smartdc/man/man1 0555 root bin

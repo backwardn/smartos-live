@@ -378,6 +378,8 @@ $(SUBDIRS): FRC
 
 install: all $(SUBDIRS)
 	echo "7.0" >$(DESTDIR)/.smartdc_version
+	mkdir -p $(DESTDIR)/var/db/imgadm $(DESTDIR)/var/fw
+	mkdir -p $(DESTDIR)/var/log/sdc/upload $(DESTDIR)/var/log/vm
 	mkdir -p $(DESTDIR)/usr/bin
 	cp -p $(TARGETS) $(DESTDIR)/usr/bin
 	mkdir -p $(DESTDIR)/usr/sbin
