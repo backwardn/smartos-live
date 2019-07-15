@@ -565,7 +565,6 @@ function bi_file_fixups
 		fail "could not copy the kernel"
 	fi
 
-	# FIXME??
 	#
 	# Need to ensure that several files in the image are empty
 	#

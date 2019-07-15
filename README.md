@@ -670,6 +670,20 @@ illumos-joyent and not any other repository. Keeping them separate this
 way allows us to minimize build-time flag days that require updating
 multiple repositories at once.
 
+#### Device Drivers
+
+For SmartOS, adding a device driver involves updating files that are
+assembled at run-time under vanilla illumos. You should check and update if
+necessary the following files under `projects/illumos`:
+
+```
+usr/src/uts/intel/os/device_policy
+usr/src/uts/intel/os/driver_aliases
+usr/src/uts/intel/os/driver_classes
+usr/src/uts/intel/os/name_to_major
+usr/src/uts/intel/os/minor_perm
+```
+
 ## Testing and Things to Think About
 
 A large part of development in the platform should be focused around
