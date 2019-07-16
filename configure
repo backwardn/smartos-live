@@ -481,8 +481,6 @@ read -r -d '' usage <<EOF
 		shadow compilers, comma delimited (gcc7,gcc#) [default: none]
 EOF
 
-source_vars
-
 while getopts "cdhp:P:rSs:" arg; do
 	case $arg in
 	c)
@@ -499,7 +497,6 @@ while getopts "cdhp:P:rSs:" arg; do
 	h)
 		echo "$usage"
 		exit 0 ;;
-
 	p)
 		PRIMARY_COMPILER=$OPTARG
 		FORCE_STRAP_REBUILD=yes ;;
@@ -507,7 +504,6 @@ while getopts "cdhp:P:rSs:" arg; do
 		PLATFORM_PASSWORD="$OPTARG" ;;
 	r)
 		FORCE_STRAP_REBUILD=yes ;;
-
 	S)
 		ENABLE_SMATCH=no ;;
 	s)
