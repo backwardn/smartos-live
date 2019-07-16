@@ -1118,6 +1118,9 @@ s usr/sbin/vmadm=../vm/sbin/vmadm
 s usr/sbin/vminfo=../vm/sbin/vminfo
 f usr/sbin/zonememstat 0555 root bin
 f usr/sbin/zonemon 0555 root bin
+d usr/share/bhyve 0555 root bin
+f usr/share/bhyve/uefi-csm-rom.bin 0444 root bin
+f usr/share/bhyve/uefi-rom.bin 0444 root bin
 d usr/node 0755 root bin
 d usr/node/0.10 0755 root bin
 d usr/node/0.10/node_modules 0755 root bin

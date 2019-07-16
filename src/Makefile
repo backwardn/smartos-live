@@ -355,6 +355,11 @@ ETC_TARGETS = \
 	etc/rtc_config \
 	etc/ssh/sshd_config
 
+BHYVE_TARGETS = \
+	bhyve/uefi-csm-rom.bin \
+	bhyve/uefi-rom.bin \
+	bhyve/README
+
 CLEANFILES += $(NOMKNOD_TARGETS) $(BUILT_TARGETS) \
     $(BUILT_SMARTDC_TARGETS) $(BUILT_SMARTDC_LIB_TARGETS)
 
@@ -370,7 +375,7 @@ check : TARGET = check
 
 all: $(TARGETS) $(USR_LIB_TARGETS) $(SMARTDC_TARGETS) \
     $(SMARTDC_LIB_TARGETS) $(LIBSDC_TARGETS) $(ETC_TARGETS) \
-    $(SUBDIRS)
+    $(SUBDIRS) $(BHYVE_TARGETS)
 
 
 $(SUBDIRS): FRC
@@ -492,6 +497,8 @@ install: all $(SUBDIRS)
 	mv $(NOMKNOD_ROOT)/$(NOMKNOD_32) $(NOMKNOD_ROOT)/$(NOMKNOD_SO)
 	/usr/sbin/install -f $(NOMKNOD_ROOT64) -m 0555 $(NOMKNOD_64)
 	mv $(NOMKNOD_ROOT64)/$(NOMKNOD_64) $(NOMKNOD_ROOT64)/$(NOMKNOD_SO)
+	mkdir -p $(DESTDIR)/usr/share/bhyve
+	cp $(BHYVE_TARGETS) $(DESTDIR)/usr/share/bhyve
 
 check: $(JSLINT) $(SUBDIRS)
 	@echo "==> Running cstyle..."
