@@ -360,8 +360,7 @@ function generate_env
 	unset IFS
 
 	if [[ "$ENABLE_SMATCH" = "yes" ]]; then
-		SMATCHBIN=\$CODEMGR_WS/usr/src/tools/proto/root_\$MACH-nd/opt/onbld/bin/\$MACH/smatch
-		SHADOW_CCS+=" smatch,$SMATCHBIN,smatch"
+		SHADOW_CCS+=" smatch,\$BUILD_TOOLS/onbld/bin/\$MACH/smatch,smatch"
 	fi
 
 	lprefix=$(echo $conf_root | tr / _)
